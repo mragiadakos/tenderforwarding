@@ -36,8 +36,8 @@ var (
 func GenerateKeyPair() (*ecdsa.PrivateKey, string) {
 	privateKey, _ := ecdsa.GenerateKey(elliptic.P521(), rand.Reader)
 
-	publicKeyBytes, _ := MarshalPublicKey(&privateKey.PublicKey)
-	return privateKey, publicKeyBytes
+	publicKeyHex, _ := MarshalPublicKey(&privateKey.PublicKey)
+	return privateKey, publicKeyHex
 }
 
 func MarshalPublicKey(pub *ecdsa.PublicKey) (string, error) {

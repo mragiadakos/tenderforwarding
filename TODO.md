@@ -12,31 +12,38 @@ For that reason, it will have only one action
 Delivery
 Request Forward:
 {
-    Redistributor: Public key hex
     Date: time
     Signature: hex
+    Action: action
     Data: {
      Coins: []uuid
-     EncryptedPrivateKeys: a hex of the encrypted json map[uuid]private_key_hex
+     EncryptedOwners: map[uuid]encrypted_private_key_hex
      Metadata: map[string]string
      Receiver: Public key hex
+     Redistributor: Public key hex
     }
 }
 Response:
   The request will fail if:
-  - The redistributor is not in the list
-  - The signature is not correct
-  - The coins are empty
-  - The encrypted data is empty
-  - The metadata is empty
+  - The redistributor is not in the list (d)
+  - The coins are empty (d)
+  - The encrypted data is empty (d)
+  - Coins not in the encrypted owners (d)
+  - The metadata is empty (d)
+  - The signature is not correct (d)
+  - The receiver is empty (d)
+  The request will success:
+  - The forward is in the database
+  
 
 Request Received:
 {
-   Receiver: Public key hex
    Date: time
    Signature: hex
+   Action: action
    Data: {
      Hash : the sha256 hash of the coins in json
+     Receiver: Public key hex
    }
 }
 Response:
