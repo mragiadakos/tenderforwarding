@@ -33,7 +33,7 @@ Response:
   - The signature is not correct (d)
   - The receiver is empty (d)
   The request will success:
-  - The forward is in the database
+  - The forward is in the database (d)
   
 
 Request Received:
@@ -48,10 +48,14 @@ Request Received:
 }
 Response:
   The request will fail if:
-  - The signature is not correct
-  - The hash does not exists
-  - The receiver is not in the receiver of the forward
-  - It is already received
+  - The hash does not exists (d)
+  - The receiver is not in the receiver of the forward (d)
+  - The signature is not correct (d)
+  The request will success when 
+  - hash has removed from the database (d)
+  - the receiver does not own the hash in the DB (d)
+  
+
 
 Query
 Request

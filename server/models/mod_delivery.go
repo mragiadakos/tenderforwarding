@@ -25,3 +25,10 @@ func (d *DeliveryModel) GetForwardModel() ForwardModel {
 	json.Unmarshal(b, &i)
 	return i
 }
+
+func (d *DeliveryModel) GetReceivedModel() ReceivedModel {
+	b, _ := json.Marshal(d.Data)
+	i := ReceivedModel{}
+	json.Unmarshal(b, &i)
+	return i
+}
