@@ -59,11 +59,13 @@ Response:
 
 Query
 Request
-/forwards?pub_hex=
+/get_forwards_by_receiver?pub_hex=
 Response
 (it will return only the ones have not been received)
 []{
+    Hash: string
     Date: time
     Coins: []uuid
     EncryptedPrivateKeys: a hex of the encrypted json map[uuid]private_key_hex
+    Metadata : map[string]string
 }
