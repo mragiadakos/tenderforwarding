@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/url"
 
+	"github.com/mragiadakos/tenderforwarding/server/dbpkg"
 	"github.com/mragiadakos/tenderforwarding/server/models"
 	"github.com/tendermint/abci/types"
 )
@@ -14,16 +15,16 @@ var (
 	ERR_PUBLIC_KEY_HAS_NOT_BEEN_SUBMITTED   = errors.New("The public key has not been submitted.")
 )
 
-func getForwardsByReceiver(app *TFApplication, pubHex string) []models.ForwardModel {
+func getForwardsByReceiver(app *TFApplication, pubHex string) []dbpkg.ForwardState {
 	hashes := app.state.GetReceiverHashes(pubHex)
-	fwds := []models.ForwardModel{}
+	fsds := []dbpkg.ForwardState{}
 	for _, hash := range hashes {
-		fwd, err := app.state.GetForward(hash)
+		fsd, err := app.state.GetForward(hash)
 		if err == nil {
-			fwds = append(fwds, *fwd)
+			fsds = append(fsds, *fsd)
 		}
 	}
-	return fwds
+	return fsds
 }
 
 func (app *TFApplication) Query(qreq types.RequestQuery) types.ResponseQuery {

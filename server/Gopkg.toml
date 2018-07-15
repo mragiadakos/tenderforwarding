@@ -49,6 +49,9 @@
   name = "github.com/tendermint/abci"
   version = "=v0.11.0"
 
+[[constraint]]
+  name = "github.com/tendermint/tendermint"
+
 [prune]
   go-tests = true
   unused-packages = true

@@ -26,25 +26,34 @@ func prefixReceiver(receiver string) []byte {
 	return append(receiverKey, []byte(receiver)...)
 }
 
+type ForwardState struct {
+	models.ForwardModel
+	Hash string
+}
+
 func (s *State) AddForward(fm models.ForwardModel) {
 	b, _ := json.Marshal(fm.Coins)
 	hash := sha256.Sum256(b)
 	hashHex := hex.EncodeToString(hash[:])
-	fmb, _ := json.Marshal(fm)
-	s.db.Set(prefixForward(hashHex), fmb)
+	fs := ForwardState{}
+	fs.ForwardModel = fm
+	fs.Hash = hashHex
+	fsb, _ := json.Marshal(fs)
+	s.db.Set(prefixForward(hashHex), fsb)
 }
 
-func (s *State) GetForward(hashHex string) (*models.ForwardModel, error) {
+func (s *State) GetForward(hashHex string) (*ForwardState, error) {
 	has := s.db.Has(prefixForward(hashHex))
 	if !has {
 		return nil, ERR_FORWARD_DOES_NOT_EXIST
 	}
 
-	fmb := s.db.Get(prefixForward(hashHex))
+	fsb := s.db.Get(prefixForward(hashHex))
 
-	fm := models.ForwardModel{}
-	json.Unmarshal(fmb, &fm)
-	return &fm, nil
+	fs := ForwardState{}
+
+	json.Unmarshal(fsb, &fs)
+	return &fs, nil
 }
 
 func (s *State) DeleteForward(hashHex string) {

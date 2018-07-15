@@ -189,8 +189,8 @@ func TestForwardSuccess(t *testing.T) {
 	hash := sha256.Sum256(cb)
 	hashHex := hex.EncodeToString(hash[:])
 
-	nfm, err := app.state.GetForward(hashHex)
+	nfs, err := app.state.GetForward(hashHex)
 	assert.Nil(t, err)
 
-	assert.Equal(t, fm, *nfm)
+	assert.Equal(t, fm, nfs.ForwardModel)
 }
